@@ -46,7 +46,11 @@ func Routes() *gin.Engine {
 
 	router.POST("/register", middleware.AuthMiddleware(), middleware.RoleMiddleware("admin"), user.Register(db))
 	router.POST("/login", user.Login(db))
-	router.POST("/register_client", middleware.AuthMiddleware(), middleware.RoleMiddleware("employee"),client.Register(db))
+	router.POST("/register_client", middleware.AuthMiddleware(), client.Register(db))
+	router.DELETE("/client/:id", middleware.AuthMiddleware(), middleware.RoleMiddleware("admin"), client.DeleteClient(db))
+	router.PUT("/client/:id", middleware.AuthMiddleware(), client.UpdateClient(db))
+	router.GET("/client/:id", middleware.AuthMiddleware(), client.ListClient(db))
+	router.PUT("/update/:id", middleware.AuthMiddleware(), user.UpdateUser(db))
 	router.Run(":8080")
 	return router
 }
