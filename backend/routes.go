@@ -51,6 +51,7 @@ func Routes() *gin.Engine {
 	router.PUT("/client/:id", middleware.AuthMiddleware(), client.UpdateClient(db))
 	router.GET("/client/:id", middleware.AuthMiddleware(), client.ListClient(db))
 	router.PUT("/update/:id", middleware.AuthMiddleware(), user.UpdateUser(db))
+	router.DELETE("/users/:id", middleware.AuthMiddleware(), middleware.RoleMiddleware("admin"), user.DeleteUser(db))
 	router.Run(":8080")
 	return router
 }
